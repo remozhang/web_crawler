@@ -1,0 +1,13 @@
+{
+    "name": "zhangl/crawler",
+    "description": "web_crawler",
+    "authors": [
+        {
+            "name": "remozhang",
+            "email": "814895077@qq.com"
+        }
+    ],
+    "require": {
+        "vdb/php-spider": "^0.3.0"
+    }
+}
