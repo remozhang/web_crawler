@@ -8,6 +8,6 @@
         }
     ],
     "require": {
-        "vdb/php-spider": "^0.3.0"
+        "owner888/phpspider": "^2.1"
     }
 }

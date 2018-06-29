@@ -1,23 +1,40 @@
 <?php
 
-use VDB\Spider\Discoverer\XPathExpressionDiscoverer;
-use VDB\Spider\Spider;
-use VDB\Spider\StatsHandler;
-
 require_once 'vendor/autoload.php';
 
-$spider = new Spider('https://secure.php.net/manual/en/pdo.prepare.php');
+use phpspider\core\phpspider;
+use phpspider\core\requests;
+use phpspider\core\selector;
+use phpspider\core\db;
 
-$spider->getDiscovererSet()->set(new XPathExpressionDiscoverer("//div[@id='pdo.prepare']//div[@class='refsect1']"));
+/* Do NOT delete this comment */
+/* 不要删除这段注释 */
+//$db_config = array(
+//    'host' => '192.168.10.10',
+//    'port' => '3306',
+//    'user' => 'homestead',
+//    'pass' => 'secret',
+//    'name' => 'homestead'
+//);
+//
+//db::set_connect('default', $db_config);
+//db::init_mysql();
 
-//$statsHandler = new StatsHandler();
-//$spider->getQueueManager()->getDispatcher()->addSubscriber($statsHandler);
-//$spider->getDispatcher()->addSubscriber($statsHandler);
+$html = requests::get('https://secure.php.net/manual/en/funcref.php');
 
-$spider->crawl();
+$li = selector::select($html, "ul[class=chunklist chunklist_set] > li", 'css');
 
-//var_dump($spider->getDownloader()->getPersistenceHandler());
-
-foreach ($spider->getDownloader()->getPersistenceHandler() as $resource) {
-     echo ($resource->getCrawler()->text());
+$data = array();
+foreach ($li as $value)
+{
+    preg_match_all('/<a href="(.*?)".*?>(.*?)<\/a>.*?<ul.*?>.*?<\/ul>/', $value, $matches);
+    $data[] = array(
+        $matches['1']['0'],
+        $matches['2']['0']
+    );
+//    $row = db::insert('category', $data);
 }
+
+var_dump($data);
+
+
