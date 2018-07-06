@@ -8,6 +8,6 @@
         }
     ],
     "require": {
-        "owner888/phpspider": "^2.1"
+        "remozhang/dao": "dev-master"
     }
 }
